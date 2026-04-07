@@ -29,5 +29,3 @@ jobs:
           az acr login --name $ {{ secrets.ACR_NAME }}
           docker build -t $ {{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }} .
           docker push $ {{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }}
-
-      
