@@ -6,7 +6,7 @@ resource "azurerm_user_assigned_identity" "managed_identity" {
 
 resource "azurerm_role_assignment" "mi_role_assignment" {
   scope                = azurerm_resource_group.rg.id
-  role_definition_name = "AcrPush"
+  role_definition_name = "Container Registry Repository Contributor"
   principal_id         = azurerm_user_assigned_identity.managed_identity.principal_id
 }
 
