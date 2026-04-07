@@ -12,7 +12,7 @@ resource "azurerm_key_vault" "key_vault" {
   sku_name = "standard"
   enabled_for_deployment          = true
   enabled_for_template_deployment = true
-  enable_rbac_authorization       = true
+  rbac_authorization_enabled      = true
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
