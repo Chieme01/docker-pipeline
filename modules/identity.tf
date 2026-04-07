@@ -10,6 +10,12 @@ resource "azurerm_role_assignment" "mi_role_assignment" {
   principal_id         = azurerm_user_assigned_identity.managed_identity.principal_id
 }
 
+resource "azurerm_role_assignment" "mi_role_assignment_acr_push" {
+  scope                = azurerm_resource_group.rg.id
+  role_definition_name = "AcrPush" #"Container Registry Repository Contributor"
+  principal_id         = azurerm_user_assigned_identity.managed_identity.principal_id
+}
+
 # resource "azurerm_federated_identity_credential" "github" {
 #   name                = "github-actions-federation"
 #   resource_group_name = "devops-pipelines-rg"
