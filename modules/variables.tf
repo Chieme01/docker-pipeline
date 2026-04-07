@@ -3,7 +3,7 @@ variable "resource_group_name" {
 }
 
 variable "repository_name" {
-  default = "devopsContainerRegistry"
+  default = "devopscontainerregistry"
 }
 
 variable "place_holder" {
