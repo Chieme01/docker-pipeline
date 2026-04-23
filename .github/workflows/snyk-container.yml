@@ -35,7 +35,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build a Docker image
-      run: docker build -f modules/docker/Dockerfile -t ${{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }} modules/docker
+      run: docker build -f modules/docker/Dockerfile -t mydummyimage/app:${{ github.sha }} modules/docker
     - name: Run Snyk to check Docker image for vulnerabilities
       # Snyk can be used to break the build when it detects vulnerabilities.
       # In this case we want to upload the issues to GitHub Code Scanning
@@ -47,7 +47,7 @@ jobs:
         # or you can signup for free at https://snyk.io/login
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        image: ${{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }}
+        image: mydummyimage/app:${{ github.sha }}
         args: --file=modules/docker/Dockerfile
 
     - name: Upload result to GitHub Code Scanning
