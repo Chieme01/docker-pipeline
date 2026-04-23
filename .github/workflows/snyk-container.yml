@@ -50,6 +50,7 @@ jobs:
       with:
         image: mydummyimage/app:${{ github.sha }}
         args: --file=modules/docker/Dockerfile
+        sarif: true
 
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v4
