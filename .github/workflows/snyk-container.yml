@@ -51,7 +51,7 @@ jobs:
         image: mydummyimage/app:${{ github.sha }}
         args: >
           --file=modules/docker/Dockerfile
-          --sarif-file-v2
+          --sarif-file-v2=snyk.sarif
         sarif: true
 
     - name: Upload result to GitHub Code Scanning
