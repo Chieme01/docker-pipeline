@@ -15,10 +15,10 @@ name: Snyk Container
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "snyk-container" ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches: [ "snyk-container" ]
   schedule:
     - cron: '18 13 * * 5'
 
@@ -35,7 +35,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build a Docker image
-      run: docker build -t your/image-to-test .
+      run: docker build -f modules/docker/Dockerfile -t ${{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }} modules/docker
     - name: Run Snyk to check Docker image for vulnerabilities
       # Snyk can be used to break the build when it detects vulnerabilities.
       # In this case we want to upload the issues to GitHub Code Scanning
@@ -47,8 +47,9 @@ jobs:
         # or you can signup for free at https://snyk.io/login
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        image: your/image-to-test
-        args: --file=Dockerfile
+        image: ${{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }}
+        args: --file=modules/docker/Dockerfile
+
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v3
       with:
