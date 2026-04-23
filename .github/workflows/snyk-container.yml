@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 # A sample workflow which checks out the code, builds a container
 # image using Docker and scans that image for vulnerabilities using
 # Snyk. The results are then uploaded to GitHub Security Code Scanning
@@ -53,7 +48,7 @@ jobs:
         image: mydummyimage/app:${{ github.sha }}
         args: >
           --file=modules/docker/Dockerfile
-        sarif: true
+          --sarif-file-v2=snyk.sarif
 
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v4
