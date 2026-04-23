@@ -35,8 +35,10 @@ jobs:
     environment: azure-prod
     steps:
     - uses: actions/checkout@v4
+    
     - name: Build a Docker image
       run: docker build -f modules/docker/Dockerfile -t mydummyimage/app:${{ github.sha }} modules/docker
+    
     - name: Run Snyk to check Docker image for vulnerabilities
       # Snyk can be used to break the build when it detects vulnerabilities.
       # In this case we want to upload the issues to GitHub Code Scanning
@@ -51,7 +53,6 @@ jobs:
         image: mydummyimage/app:${{ github.sha }}
         args: >
           --file=modules/docker/Dockerfile
-          --sarif-file-v2=snyk.sarif
         sarif: true
 
     - name: Upload result to GitHub Code Scanning
