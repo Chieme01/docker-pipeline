@@ -3,13 +3,15 @@
 
 2. Assign roles Container Registry Repository Contributor and AcrPush to the Managed Identity
 
-3. Create Environment in Github:
+3. Create Environment in Github:**two blank spaces**
 Go to repository's Settings --> Ennvironments --> New environment
 
+```markdown
 4. Create Environment secrets for the following Managed-Identity's secrets.
 AZURE_CLIENT_ID
 AZURE_TENANT_ID
 AZURE_SUBSCRIPTION_ID
+```
 
 # Understanding the commands in the Dockerfile.
 
