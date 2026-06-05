@@ -1,6 +1,17 @@
 # docker-pipeline
+1. Create Manged Identity in Azure
 
-Understanding the commands
+2. Assign roles Container Registry Repository Contributor and AcrPush to the Managed Identity
+
+3. Create Environment in Github:
+Go to repository's Settings --> Ennvironments --> New environment
+
+4. Create Environment secrets for the following Managed-Identity's secrets.
+AZURE_CLIENT_ID
+AZURE_TENANT_ID
+AZURE_SUBSCRIPTION_ID
+
+# Understanding the commands in the Dockerfile.
 
 In modules/docker/Dockerfile
 
