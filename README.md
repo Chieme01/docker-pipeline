@@ -11,6 +11,14 @@ Go to repository's Settings --> Ennvironments --> New environment
 
 AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID
 
+5. Create Personal Access Token (PAT)
+
+Github Profile --> Settings --> Developer settings -->  Personal access tokens --> Fine-grained tokens --> Generate new token
+
+Add "Contents" permission for "Read and write".
+
+6. Save Personal Access Token (PAT)
+
 
 ### Understanding the commands in the Dockerfile.
 
