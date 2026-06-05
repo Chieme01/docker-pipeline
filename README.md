@@ -1,7 +1,7 @@
 # docker-ci-pipeline
 1. Create Manged Identity in Azure
 
-2. Assign roles Container Registry Repository Contributor and AcrPush to the Managed Identity
+2. Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
 
 3. Create Environment in Github:
 
@@ -11,7 +11,7 @@ Go to repository's Settings --> Ennvironments --> New environment
 
 AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID
 
-# Understanding the commands in the Dockerfile.
+### Understanding the commands in the Dockerfile.
 
 In modules/docker/Dockerfile
 
