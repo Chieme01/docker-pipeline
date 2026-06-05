@@ -11,6 +11,7 @@ Go to repository's Settings --> Ennvironments --> New environment
 
 AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID
 
+
 ### Understanding the commands in the Dockerfile.
 
 In modules/docker/Dockerfile
