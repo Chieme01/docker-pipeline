@@ -21,11 +21,11 @@ terraform plan
 terraform apply
 ```
 
-4. Store ACR's name in environment secret named as "ACR_NAME".
+##### 4. Store ACR's name in environment secret named as "ACR_NAME".
 
 Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret 
 
-5. Create Managed Identity in Azure
+##### 5. Create Managed Identity in Azure
 
 6. Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
 
