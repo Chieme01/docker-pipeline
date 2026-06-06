@@ -76,7 +76,7 @@ jobs:
       - name: Checkout GitOps Repository
         uses: actions/checkout@v4
         with:
-          repository: Chieme01/my-gitops-repo
+          repository: Chieme01/kubernetes-argocd-application-configuration
           token: ${{ secrets.GITOPS_PAT }}
           path: gitops-repo
 
