@@ -2,17 +2,17 @@
 
 ### Steps to deploy
 
-1. Create Environment in Github:
+#### 1. Create Environment in Github:
 
 Go to repository's Settings --> Ennvironments --> New environment
 
-2. Clone this repository:
+#### 2. Clone this repository:
 
 ```bash
 git clone https://github.com/Chieme01/docker-ci-pipeline.git
 ```
 
-3. Create your Azure Container Registry (ACR) and other foundational resources in azure
+#### 3. Create your Azure Container Registry (ACR) and other foundational resources in azure
 
 Review and apply the terraform code in this repository:
 
