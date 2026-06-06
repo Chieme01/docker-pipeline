@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-scan-push # Strict dependency: Only runs if the build job succeeds
     # if: github.ref == 'refs/heads/main' # Only run deployments for main branch pushes
-    environment: github-gitops
+    environment: azure-prod
 
     steps:
       - name: Checkout GitOps Repository
@@ -83,7 +83,7 @@ jobs:
       - name: Update Image Tag in deployment.yaml
         run: |
           cd gitops-repo
-          sed -i 's|image: ${{ secrets.ACR_NAME }}.azurecr.io/app:.*|image: ${{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }}|g' manifests/deployment.yaml
+          sed -i 's|image:\s*${{ secrets.ACR_NAME }}.azurecr.io/app:.*|image: ${{ secrets.ACR_NAME }}.azurecr.io/app:${{ github.sha }}|g' manifests/deployment.yaml
 
       - name: Commit and Push Changes to GitOps Repo
         run: |
@@ -91,5 +91,11 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add manifests/deployment.yaml
-          git commit -m "Update application image tag to ${{ github.sha }}"
-          git push origin main
+          # Check if there are changes to commit
+          if git diff --cached --quiet; then
+            echo "No changes detected in deployment.yaml. Skipping commit."
+          else
+            git commit -m "Update application image tag to ${{ github.sha }}"
+            git push origin main
+          fi
+          
