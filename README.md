@@ -27,29 +27,44 @@ Go to repository's Settings --> Ennvironments --> Select environment --> Add env
 
 5. Create Managed Identity in Azure
 
-6. Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
+Azure portal --> Managed Identity --> Create
 
-7. Create Environment secrets for the following Managed-Identity secrets:
+6. Add Federated Credentials to the Manged Identity
 
-AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID
+Azure portal --> Managed Identity --> Select Managed Identity --> Settings --> Federated Credentials -- Add Credentials --> Select "Github Actions deploying Azure resources" scenario 
 
-8. Create Synk Token
+```
+Organization = <YOUR GITHUB ORGANIZATION OR PROFILE NAME>
+Repository = <YOUR GITHUB REPOSITORY NAME>
+Entity = Environment
+Environment = <YOUR GITHUB ENVIRONMENT NAME FROM STEP 1>
+Name = <NAME OF THE FEDERATED CREDENTIAL>
+```
+7.  Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
+
+8. Create Environment secrets for the Managed-Identity secrets:
+
+Azure portal --> Managed Identity --> Select Managed Identity --> Settings --> Properties --> Copy Tenant Id, Client Id and Subscription Id
+
+Go to Github repository's Settings --> Ennvironments --> Select environment --> Add environment secret --> Create secrets for: AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID
+
+9. Create Synk Token
 
 Sign up for snyk at https://snyk.io/login
 
 Synk Web UI --> profile avatar --> Account Settings --> Personal Access Tokens --> Generate new token
 
-9. Store Snyk Token in environment secret named as "SNYK_TOKEN".
+10. Store Snyk Token in environment secret named as "SNYK_TOKEN".
 
 Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret
 
-10. Create Personal Access Token (PAT)
+11. Create Personal Access Token (PAT)
 
 Github Profile --> Settings --> Developer settings -->  Personal access tokens --> Fine-grained tokens --> Generate new token
 
 Add "Contents" permission for "Read and write".
 
-11. Store Personal Access Token (PAT) as ennvironment secrets named "GITOPS_PAT".
+12. Store Personal Access Token (PAT) as ennvironment secrets named "GITOPS_PAT".
 
 Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret
 
