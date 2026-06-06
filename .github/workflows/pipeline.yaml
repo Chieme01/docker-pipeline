@@ -90,6 +90,6 @@ jobs:
           cd gitops-repo
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git add kubernetes/deployment.yaml
+          git add manifests/deployment.yaml
           git commit -m "Update application image tag to ${{ github.sha }}"
           git push origin main
