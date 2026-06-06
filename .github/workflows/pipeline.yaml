@@ -69,7 +69,7 @@ jobs:
   update-gitops:
     runs-on: ubuntu-latest
     needs: build-scan-push # Strict dependency: Only runs if the build job succeeds
-    if: github.ref == 'refs/heads/main' # Only run deployments for main branch pushes
+    # if: github.ref == 'refs/heads/main' # Only run deployments for main branch pushes
     environment: github-gitops
 
     steps:
