@@ -2,17 +2,17 @@
 
 ### Steps to deploy
 
-1. Create Environment in Github:
+##### 1. Create Environment in Github:
 
 Go to repository's Settings --> Ennvironments --> New environment
 
-2. Clone this repository:
+##### 2. Clone this repository:
 
 ```bash
 git clone https://github.com/Chieme01/docker-ci-pipeline.git
 ```
 
-3. Create your Azure Container Registry (ACR) and other foundational resources in azure
+##### 3. Create your Azure Container Registry (ACR) and other foundational resources in azure
 
 Review and apply the terraform code in this repository:
 
@@ -21,15 +21,15 @@ terraform plan
 terraform apply
 ```
 
-4. Store ACR's name in environment secret named as "ACR_NAME".
+##### 4. Store ACR's name in environment secret named as "ACR_NAME".
 
 Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret 
 
-5. Create Managed Identity in Azure
+##### 5. Create Managed Identity in Azure
 
 Azure portal --> Managed Identity --> Create
 
-6. Add Federated Credentials to the Manged Identity
+##### 6. Add Federated Credentials to the Manged Identity
 
 Azure portal --> Managed Identity --> Select Managed Identity --> Settings --> Federated Credentials -- Add Credentials --> Select "Github Actions deploying Azure resources" scenario 
 
@@ -40,31 +40,31 @@ Entity = Environment
 Environment = <YOUR GITHUB ENVIRONMENT NAME FROM STEP 1>
 Name = <NAME OF THE FEDERATED CREDENTIAL>
 ```
-7.  Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
+##### 7.  Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
 
-8. Create Environment secrets for the Managed-Identity secrets:
+##### 8. Create Environment secrets for the Managed-Identity secrets:
 
 Azure portal --> Managed Identity --> Select Managed Identity --> Settings --> Properties --> Copy Tenant Id, Client Id and Subscription Id
 
 Go to Github repository's Settings --> Ennvironments --> Select environment --> Add environment secret --> Create secrets for: AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID
 
-9. Create Synk Token
+##### 9. Create Synk Token
 
 Sign up for snyk at https://snyk.io/login
 
 Synk Web UI --> profile avatar --> Account Settings --> Personal Access Tokens --> Generate new token
 
-10. Store Snyk Token in environment secret named as "SNYK_TOKEN".
+##### 10. Store Snyk Token in environment secret named as "SNYK_TOKEN".
 
 Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret
 
-11. Create Personal Access Token (PAT)
+##### 11. Create Personal Access Token (PAT)
 
 Github Profile --> Settings --> Developer settings -->  Personal access tokens --> Fine-grained tokens --> Generate new token
 
 Add "Contents" permission for "Read and write".
 
-12. Store Personal Access Token (PAT) as ennvironment secrets named "GITOPS_PAT".
+##### 12. Store Personal Access Token (PAT) as ennvironment secrets named "GITOPS_PAT".
 
 Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret
 
