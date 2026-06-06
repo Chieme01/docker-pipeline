@@ -1,28 +1,61 @@
 # docker-ci-pipeline
-1. Create Manged Identity in Azure
 
-2. Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
+### Steps to deploy
 
-3. Create Environment in Github:
+1. Create Environment in Github:
 
 Go to repository's Settings --> Ennvironments --> New environment
 
-4. Create Environment secrets for the following Managed-Identity's secrets:
+2. Clone this repository:
+
+```bash
+git clone https://github.com/Chieme01/docker-ci-pipeline.git
+```
+
+3. Create your Azure Container Registry (ACR) and other foundational resources in azure
+
+Review and apply the terraform code in this repository:
+
+```bash
+terraform plan
+terraform apply
+```
+
+4. Store ACR's name in environment secret named as "ACR_NAME".
+
+Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret 
+
+5. Create Managed Identity in Azure
+
+6. Assign roles "Container Registry Repository Contributor" and "AcrPush" to the Managed Identity
+
+7. Create Environment secrets for the following Managed-Identity secrets:
 
 AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID
 
-5. Create Personal Access Token (PAT)
+8. Create Synk Token
+
+Sign up for snyk at https://snyk.io/login
+
+Synk Web UI --> profile avatar --> Account Settings --> Personal Access Tokens --> Generate new token
+
+9. Store Snyk Token in environment secret named as "SNYK_TOKEN".
+
+Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret
+
+10. Create Personal Access Token (PAT)
 
 Github Profile --> Settings --> Developer settings -->  Personal access tokens --> Fine-grained tokens --> Generate new token
 
 Add "Contents" permission for "Read and write".
 
-6. Save Personal Access Token (PAT)
+11. Store Personal Access Token (PAT) as ennvironment secrets named "GITOPS_PAT".
+
+Go to repository's Settings --> Ennvironments --> Select environment --> Add environment secret
 
 
 ### Understanding the commands in the Dockerfile.
-
-In modules/docker/Dockerfile
+In modules/docker/Dockerfile;
 
 - WORKDIR /app : If you don't set a workdir, Docker defaults to the root directory (/). If you copy your app there, your code gets mixed in with system folders like /etc, /bin, and /var. If the folder /app doesn't exist yet, Docker will create it for you automatically. You don't need to run RUN mkdir /app
 
@@ -39,14 +72,14 @@ It allows the application to run as a non-root user while still having access to
 
 - --no-cache-dir : This flag tells pip to delete the downloaded files as soon as the installation is finished. It ensures that the "trash" never gets saved into your Docker layer.
 
-Why use multiple Stages
+### Why use multiple Stages in the Docker build
 In Docker, deleted files still take up space if they were created in a previous layer.
 
 In Single-Stage: If you run apt-get install build-essential in one line and then apt-get remove in another, that 100MB of tools is still inside the image's history. It's just hidden.
 
 In Multi-Stage: The second stage starts with a fresh, blank slate (a new FROM line). When you COPY --from=builder, you are only picking up the "finished fruit" and leaving the "peels and stems" behind in a stage that is eventually discarded.
 
-Why separate RUN commands
+### Why separate RUN commands
 In Docker, every line in your Dockerfile creates a layer. If a line (and all the lines above it) hasn't changed since the last build, it skips that step and uses a cached version.
 
 By separating the system tools (apt-get) from the Python libraries (pip), it makes your local development and your GitHub Actions pipeline significantly faster.
@@ -54,3 +87,6 @@ By separating the system tools (apt-get) from the Python libraries (pip), it mak
 - RUN groupadd -r appgroup && useradd -r -g appgroup appuser : It creates a dedicated, limited-power user to run your application. Even though a container is "isolated," it shares the same Kernel as the host machine (the EC2 instance or the Azure VM).
 If a process is running as root inside the container and manages to "break out" (via a kernel exploit), it is now root on the actual physical host.
 By switching to a non-privileged user (appuser), even if a hacker takes over your app, they are trapped in a "low-privilege" account. They can't install new software, change system files, or easily attack the host.
+
+### Notes
+For more examples, including how to limit scans to only high-severity issues, monitor images for newly disclosed vulnerabilities in Snyk and fail PR checks for new vulnerabilities, see https://github.com/snyk/actions/
